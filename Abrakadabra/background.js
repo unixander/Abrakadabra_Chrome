@@ -1,0 +1,1 @@
+var time=1E3,run=!0;function checktext(){run&&abrakadabra();setTimeout("checktext();",time)}checktext();
