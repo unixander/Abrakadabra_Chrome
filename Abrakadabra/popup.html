@@ -1,15 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head>
-    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script src="abra_library.js"></script>
+	<script src="abrakadabra.js"></script>
+	<script src="background.js"></script>
   </head>
   <body>
-  <div style="width:250px">
-  	Found a bug/error? Send it to <a target="_blank" href="mailto:abrakadabra@unixander.org.ua">us</a></br>
-  	Also will be glad to see your feedback. <a target="_blank" href="mailto:abrakadabra@unixander.org.ua">Send feedback</a>
+  <div style="width:250px;">
+  	Found a bug/error? Send it to <a href="mailto:abrakadabra@unixander.org.ua">us</a></br>
+  	Also will be glad to see your feedback. <a href="mailto:abrakadabra@unixander.org.ua">Send feedback</a>
   	<hr>
-  	Нашли ошибку? Сообщите <a target="_blank" href="mailto:abrakadabra@unixander.org.ua">нам</a></br>
-  	Будем рады вашим отзывам <a target="_blank" href="mailto:abrakadabra@unixander.org.ua">Отправить отзыв</a>
+	Settings:<br>
+	<input type="checkbox" id="abracheck" onchange="changeabracheck();"/> Check message log<br>
+	<input type="checkbox" id="abracheckinput" onchange="changeabracheckinput();"/> Check input field
+	<hr>
+  	Нашли ошибку? Сообщите <a href="mailto:abrakadabra@unixander.org.ua">нам</a></br>
+  	Будем рады вашим отзывам <a href="mailto:abrakadabra@unixander.org.ua">Отправить отзыв</a>
+	<hr>
+		<input type="checkbox" id="abracheck_ru" onchange="changeabracheck();"/> Исправлять входящие сообщения<br>
+	<input type="checkbox" id="abracheckinput_ru" onchange="changeabracheckinput();"/> Исправлять в полях ввода
   </div>
+  <script>
+		function abra_load_checkboxes(){
+			var first=storage.get("abra_check_input");
+			var second=storage.get("abra_check");
+			checkstorage();
+			if(first=="true") first=true; else first=false;
+			if(second=="true") second=true; else second=false;
+				document.getElementById("abracheck").checked=second;
+				document.getElementById("abracheck_ru").checked=second;
+				document.getElementById("abracheckinput").checked=first;
+				document.getElementById("abracheckinput_ru").checked=first;
+		}
+		chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+			if (request.method == "getLocalStorage")
+			  sendResponse({data: localStorage[request.key]});
+			else
+			  sendResponse({}); // snub them.
+		});
+		abra_load_checkboxes();
+	</script>
   </body>
 </html>
