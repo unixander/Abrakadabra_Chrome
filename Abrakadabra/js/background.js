@@ -30,7 +30,7 @@ function abra_get_storage(){
   });
   chrome.extension.sendRequest({method: "getLocalStorage", key: "abra_check_input"}, function(response) {
   console.log("abra_check_input="+response.data);
-    if(response.data=="true")input_check=true; else input_check=false;
+    if(response.data=="true") input_check=true; else input_check=false;
   });
   chrome.extension.sendRequest({method: "getLocalStorage", key: "abra_old_hotkey"}, function(response) {
   	var h=response.data;
@@ -103,24 +103,52 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 });
 
 function checktext(){
-	abra_get_storage();
-    if(input_check){ 
+	chrome.extension.sendRequest({method: "getLocalStorage", key: "abra_check_input"}, function(response) {
+    if(response.data=="true"){
+			input_check=true; 
 			$("input").live("keyup",checkinput);
 			$("textarea").live("keyup", checkinput);
 			$("input").each(checkinput);
 			$("textarea").each(checkinput);
-		}
-		else {
+		} else {
 			$("input").die("keyup",checkinput);
 			$("textarea").die("keyup",checkinput);
+			input_check=false;
 		}
-	if(run){
-		$(getPageLogClass()).live('DOMNodeInserted DOMNodeRemoved DOMSubtreeModified',abrakadabra);
-		abrakadabra();
-		}
-		else
-		$(getPageLogClass()).die('DOMNodeInserted DOMNodeRemoved DOMSubtreeModified',abrakadabra);
-	
+	});
+	  chrome.extension.sendRequest({method: "getLocalStorage", key: "abra_check"}, function(response) {
+		if(response.data=="true"){
+				run=true; 
+				$(getPageLogClass()).live('DOMNodeInserted DOMNodeRemoved DOMSubtreeModified',abrakadabra);
+				abrakadabra();
+			} else {
+				$(getPageLogClass()).die('DOMNodeInserted DOMNodeRemoved DOMSubtreeModified',abrakadabra);
+				run=false;
+			}
+	  });
+	  chrome.extension.sendRequest({method: "getLocalStorage", key: "abra_old_hotkey"}, function(response) {
+  	var h=response.data;
+	console.log("abra_old="+response.data);
+	if(h!=undefined&&h!=""){
+		shortcut.remove(h);
+	}	
+  });
+  chrome.extension.sendRequest({method: "getLocalStorage", key: "abra_hotkey"}, function(response) {
+	shortcut.add(response.data,activeSelection);
+  });
+  chrome.extension.sendRequest({method: "getLocalStorage", key: "abra_check_selected"}, function(response) {
+	var resp=response.data;
+	switch(resp){
+		case "true":
+			checkselected=true;
+			break;
+		case "false":
+			checkselected=false;
+			break;
+		default:
+			break;
+	}
+  });
 }
 
 function checkinput(){
@@ -142,7 +170,7 @@ function activeSelection(){
 	} 
 	var start;
 	var end;
-	var seltag
+	var seltag;
 	var elem=getSelectedNode();
 	var t=new String(getSelectedText());
 	if(elem==undefined){
@@ -180,4 +208,4 @@ function activeSelection(){
 	 }
 	}
 }
-checktext();
+$(document).ready(checktext());

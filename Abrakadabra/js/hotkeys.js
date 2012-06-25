@@ -22,8 +22,10 @@ function getSelectedText()
     }
 }
 
-function setHotkey(){
-	var oForm = document.forms["selecthotkey"];
+function setHotkey(elem){
+	var formname = "selecthotkey";
+	if(elem.value.indexOf("Set")==-1) formname+="_rus";
+	var oForm = document.forms[formname];
 	var first=oForm.elements["firstkey"].value;
 	var second=oForm.elements["secondkey"].value;
 	var third=oForm.elements["speckey"].value;
@@ -70,23 +72,21 @@ function abra_load_checkboxes(){
 	if(first=="true") first=true; else first=false;
 	if(second=="true") second=true; else second=false;
 	if(third=="true") third=true; else third=false;
-	document.getElementById("abracheck").checked=second;
-	document.getElementById("abracheckinput").checked=first;
-	document.getElementById("checkselected").checked=third;
+	$(".abracheck").attr("checked",second);
+	$(".abracheckinput").attr("checked",first);
+	$(".checkselected").attr("checked",third);
 	var hotkey=storage.get("abra_hotkey");
-	document.getElementById("currenthot").innerHTML="<u>Current hotkey</u>: <i>"+hotkey+"</i>";
+	$(".currenthot").html("<i>"+hotkey+"</i>");
 };
 
 function changeabracheck(){
-	var ch=document.getElementById("abracheck");
-	if(!ch) return;
 	if(storage.get("abra_check")=="true"){
 		storage.set("abra_check",false);
-		ch.checked=false;
+		$(".abracheck").attr("checked", false);
 	}
 	else {
 		storage.set("abra_check",true);
-		ch.checked=true;
+		$(".abracheck").attr("checked", true);
 	}
 	var d=storage.get("abra_check");
 	chrome.extension.getBackgroundPage().storage.set("abra_check",d);
@@ -95,15 +95,13 @@ function changeabracheck(){
 	});
 };
 function changeabracheckinput(){
-	var ch=document.getElementById("abracheckinput");
-	if(!ch) return;
 	if(storage.get("abra_check_input")=="true"){
 		storage.set("abra_check_input","false");
-		ch.checked=false;
+		$(".abracheckinput").attr("checked", false);
 	}
 	else {
 		storage.set("abra_check_input","true");
-		ch.checked=true;
+		$(".abracheckinput").attr("checked", true);
 	}
 	var d=storage.get("abra_check_input");
 	chrome.extension.getBackgroundPage().storage.set("abra_check_input",d);
@@ -113,15 +111,13 @@ function changeabracheckinput(){
 };
 
 function changehotkeyaction(){
-	var ch=document.getElementById("checkselected");
-	if(!ch) return;
 	if(storage.get("abra_check_selected")=="true"){
 		storage.set("abra_check_selected","false");
-		ch.checked=false;
+		$(".checkselected").attr("checked", false);
 	}
 	else {
 		storage.set("abra_check_selected","true");
-		ch.checked=true;
+		$(".checkselected").attr("checked", true);
 	}
 	var d=storage.get("abra_check_selected");
 	chrome.extension.getBackgroundPage().storage.set("abra_check_selected",d);
