@@ -1,0 +1,92 @@
+<html>
+<head>
+</head>
+<body>
+<textarea id="t"></textarea>
+<input type="button" onclick="activeSelection();"/>
+<div>
+	abrakadabra!
+</div>
+<input type="text">
+<form name="selecthotkey">
+<select name="firstkey">
+	<option value="Ctrl">Ctrl
+	<option value="Alt">Alt
+	<option value="Shift">Shift
+	<option value="Meta">Meta
+</select>
+<select name="secondkey">
+	<option value="none">None
+	<option value="Ctrl">Ctrl
+	<option value="Alt">Alt
+	<option value="Shift">Shift
+	<option value="Meta">Meta
+</select>
+<select name="speckey">
+	<option value="A">A
+</select>
+<input type="button" value="Save" onclick="setHotkey()"/>
+</form>
+</body>
+<script>
+function getSelectedNode()
+{
+    if (document.selection)
+        return document.selection.createRange().parentElement();
+    else
+    {
+        var selection = window.getSelection();
+        if (selection.rangeCount > 0)
+                return selection.getRangeAt(0).startContainer.parentNode;
+    }
+}
+
+function getSelectedText()
+{
+	if (document.selection)
+        return document.selection.createRange();
+    else
+    {
+        var selection = window.getSelection();
+        if (selection.rangeCount > 0)
+                return selection.getRangeAt(0);
+    }
+}
+function activeSelection(){
+	
+	var start;
+	var end;
+	 var elem=getSelectedNode();
+	 if(elem==undefined){
+	  var active=document.activeElement;
+	  return;
+	 }
+	 var seltag=new String(elem.tagName);
+	 if(seltag.indexOf("TEXT")>-1||seltag.indexOf("input")>-1){
+		if (document.selection != undefined)
+		{
+			elem.focus();
+			var selection=getSelectedText();
+			var t=new String(selection);
+		} else return;
+		var temp=elem.value;
+		if(temp.indexOf(t)>-1){
+			var text=temp.substring(0,start)+enru(t)+temp.substring(end);
+			 elem.value=text;
+		}
+	 } else {
+	 	if(t!=""){
+		 var selection=getSelectedText();
+		 var t=new String(selection);
+		 var temp=elem.innerHTML;
+		 start=selection.startOffset;
+		 end=selection.endOffset;
+		 if(temp.indexOf(t)>-1){
+			 var text=temp.substring(0,start)+enru(t)+temp.substring(end);
+			 elem.innerHTML=text;
+		}
+	 }
+	}
+}
+</script>
+</html>
