@@ -69,6 +69,7 @@ function abra_load_checkboxes(){
 	checkstorage();
 	if(first=="true") first=true; else first=false;
 	if(second=="true") second=true; else second=false;
+	if(third=="true") third=true; else third=false;
 	document.getElementById("abracheck").checked=second;
 	document.getElementById("abracheckinput").checked=first;
 	document.getElementById("checkselected").checked=third;
