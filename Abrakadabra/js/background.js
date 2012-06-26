@@ -208,4 +208,4 @@ function activeSelection(){
 	 }
 	}
 }
-$(document).ready(checktext());
+$(document).ready(checktext);
