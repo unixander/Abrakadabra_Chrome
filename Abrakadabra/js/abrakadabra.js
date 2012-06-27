@@ -4,8 +4,9 @@
  */
 
 
-function checkInput() {
-    var elem = $(this);
+function checkInput(node) {
+    var elem = $(node);
+    
     if (elem.length > 0) {
         elem.val(translate(elem.val()));
     }
@@ -52,8 +53,7 @@ function translateSelection() {
         if (selectedText.length > 0 && val.indexOf(selection) > -1) {
             selectedNode.value = val.substring(0, start) + translate(selectedText) + val.substring(end);
         } else {
-            $("input").each(checkInput);
-            $("textarea").each(checkInput);
+            checkInput(selectedNode);
             return;
         }
     } else if (selectedText != "") {
