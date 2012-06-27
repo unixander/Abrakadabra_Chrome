@@ -1,70 +1,94 @@
-/**
+﻿/**
  * @author unixander
+           ↑ oops, you're not alone :)
  */
-			var fb_class="fbChatMessage fsm direction_ltr";
-			var vk_class="fc_msg wrapped";
-			var gm_class="kl";
-			var imo_class="ms";
-			function abrakadabra(){
-				var classname="kl";
-				var url=document.URL;
-				if(url.indexOf("vk.com")!=-1) classname=vk_class; else
-				if(url.indexOf("google.mail.com")!=-1) classname=gm_class; else
-				if(url.indexOf("imo.im")!=-1) classname=imo_class; else
-				if(url.indexOf("facebook")!=-1||url.indexOf("fb.com")!=-1) classname=fb_class; 
-				
-				var array=getElementsByClassName(classname);
-				for(var i=0;i<array.length;i++){
-					if(array[i].innerHTML!=""){
-						res=enru(array[i].innerHTML);
-						array[i].innerHTML=res;
-					}
-				}
-			}
-			function getElementsByClassName(classname)  {
-			    var array = [];
-			    var re = new RegExp('\\b' + classname + '\\b');
-			    var els = document.getElementsByTagName("div");
-			    for(var i=0,j=els.length; i<j; i++)
-			        if(re.test(els[i].className))array.push(els[i]);
-			    return array;
-			}
-			function enru(text){
-				var result="";
-				var direction=0;
-				var current_word=new String();
-				var ch;
-				for(var i=0;i<text.length;i++){
-					ch=text.charAt(i);
-					if(stop_symbols.indexOf(ch)>-1){
-						if(en_letters.indexOf(current_word.charAt(0))>-1) direction=0; else direction=1;
-						result+=replace(current_word,direction)+ch;
-						current_word="";
-					} else current_word+=ch;
-				}
-				if(en_letters.indexOf(current_word.charAt(0))>-1) direction=0; else direction=1;
-				result+=replace(current_word,direction);
-				return result;
-			}
-			function replace(text,direction){
-				//0-english to russian
-				//1-russian to english
-				var result="";
-				var ch='';
-				var pos=0;
-				if(direction==0){
-					for(var i=0;i<text.length;i++){
-						ch=text.charAt(i);
-						pos=en_letters.indexOf(ch);
-						if(pos!=-1)result+=ru_letters[pos];
-					}
-				}else{
-					for(var i=0;i<text.length;i++){
-						ch=text.charAt(i);
-						pos=ru_letters.indexOf(ch);
-						if(pos!=-1)result+=en_letters[pos];
-					}
-				}
-				return result;
-			}
-			
+
+
+function checkInput() {
+    var elem = $(this);
+    if (elem.length > 0) {
+        elem.val(translate(elem.val()));
+    }
+}
+
+function getSelectedNode(selection) {
+    return selection.createRange
+        ? selection.createRange().parentElement()
+        : selection.startContainer.parentNode;
+}
+
+function getDocumentSelection() {
+    if (document.selection) {
+        return document.selection.createRange();
+    } else {
+        var selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+            return selection.getRangeAt(0);
+        }
+    }
+}
+
+function translateSelection() {
+    var selection = getDocumentSelection(),
+        selectedText = selection + "",
+        selectedNode = getSelectedNode(selection),
+        activeNode = document.activeElement,
+        activeNodeTag = activeNode.tagName + "",
+        start = selection.startOffset,
+        end = selection.endOffset;
+
+    if (activeNodeTag.indexOf("TEXT") > -1 || activeNodeTag.indexOf("input") > -1) {
+        selectedNode = activeNode;
+    }
+
+    if (selectedNode == undefined) {
+        return;
+    }
+
+    if (selectedNode.tagName.indexOf("TEXT") > -1 || selectedNode.tagName.indexOf("input") > -1) {
+        selectedNode.focus();
+        var val = selectedNode.value;
+
+        if (selectedText.length > 0 && val.indexOf(selection) > -1) {
+            selectedNode.value = val.substring(0, start) + translate(selectedText) + val.substring(end);
+        } else {
+            $("input").each(checkInput);
+            $("textarea").each(checkInput);
+            return;
+        }
+    } else if (selectedText != "") {
+        val = selectedNode.innerHTML;
+
+        if (selectedText.length > 0 && val.indexOf(selection) > -1) {
+            selectedNode.innerHTML = val.substring(0, start) + translate(selectedText) + val.substring(end);
+        }
+    }
+}
+
+function translate(text) {
+    var result = "",
+        enLetters = 'qwertyuiop[]asdfghjkl;\'zxcvbnm,./QWERTYUIOP{}ASDFGHJKL:"ZXCVBNM<>?`~',
+        ruLetters = 'йцукенгшщзхъфывапролджэячсмитьбю.ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ,ёЁ',
+        language = ruLetters;
+
+    for (var i = 0, len = text.length; i < len; i++) {
+        var chr = text.charAt(i),
+            rIndex = ruLetters.indexOf(chr),
+            eIndex = enLetters.indexOf(chr);
+
+        if (rIndex > -1 && eIndex > -1) {
+            result += language == ruLetters
+                ? ruLetters[eIndex]
+                : enLetters[rIndex];
+        } else if (rIndex > -1) {
+            result += enLetters[rIndex];
+            language = enLetters;
+        } else if (eIndex > -1) {
+            result += ruLetters[eIndex];
+            language = ruLetters;
+        } else {
+            result += chr;
+        }
+    }
+    return result;
+}
