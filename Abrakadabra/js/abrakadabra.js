@@ -1,8 +1,3 @@
-﻿/**
- * @author unixander
-           ↑ oops, you're not alone :)
- */
-
 
 function checkInput(node) {
     var elem = $(node);
