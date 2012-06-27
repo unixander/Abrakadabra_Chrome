@@ -1,10 +1,10 @@
 {
-    "name": "Abraсadabra",
+    "name": "Abracadabra",
     "version": "1.2.0.1",
     "manifest_version": 1,
     "description": "Replace words written in other language keyboard layout",
     "browser_action": { 
-        "default_title": "Abrakadabra", 
+        "default_title": "Abracadabra", 
         "default_icon": "images/icon.ico",
         "default_popup": "popup.html"
     },
