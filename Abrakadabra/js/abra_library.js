@@ -1,39 +1,16 @@
-			var en_letters=new Array('q','w','e','r','t','y','u','i','o','p','[',']','a','s',
-									'd','f','g','h','j','k','l',';',"'",'z','x','c','v','b',
-									'n','m',',','.','/','Q','W','E','R','T','Y','U','I','O','P','{','}'
-									,'A','S','D','F','G','H','J','K','L',':','"','Z','X','C','V','B'
-									,'N','M','<','>','?','`','~');
-			var ru_letters=new Array('й','ц','у','к','е','н','г','ш','щ','з','х','ъ'
-									,'ф','ы','в','а','п','р','о','л','д','ж','э','я'
-									,'ч','с','м','и','т','ь','б','ю','.','Й','Ц','У'
-									,'К','Е','Н','Г','Ш','Щ','З','Х','Ъ','Ф','Ы','В'
-									,'А','П','Р','О','Л','Д','Ж','Э','Я','Ч','С','М'
-									,'И','Т','Ь','Б','Ю',',','ё','Ё');
-			var en_consonants=new Array('q','w','r','t','p','[',']','s',
-										'd','f','g','h','j','k','l',';',"'",'z','x','c','v','b',
-										'n','m',',','.','/','Q','W','R','T','P','{','}'
-										,'S','D','F','G','H','J','K','L',':','"','Z','X','C','V','B'
-										,'N','M','<','>','?','`','~');
-			var ru_consonants=new Array(
-									'й','ц','к','н','г','ш','щ','з','х','ъ'
-									,'ф','в','п','р','л','д','ж'
-									,'ч','с','м','т','ь','б','.','Й','Ц'
-									,'К','Н','Г','Ш','Щ','З','Х','Ъ','Ф','В'
-									,'П','Р','Л','Д','Ж','Ч','С','М'
-									,'Т','Ь','Б',','
-									);
-			var en_vowels=new Array(
-									'e','y','u','i','o','a',
-									'E','Y','U','I','O','A'
-									);
-			var ru_vowels=new Array(
-									'у','е','ы','а','о','э','я','и','ю',
-									'У','Е','Ы','А','О','Э','Я','И','Ю','ё','Ё'
-			);				
-			var stop_symbols=new Array(
-									' ','?','.',',','!','(',')','<','#','$','%','^','&','*'				
-			);
-			var ru_notwords=new Array('yf','r','yj','f','e;t','b','yt','jyb','Jyb','E;t');
-			var ru_words=new Array('на','к','но','а','уже','и','не','они','Они','Уже');
-			var en_notwords=new Array('руддщ','Руддщ');
-			var en_words=new Array('hello','Hello');
+			//Correspondence of english and russian characters
+			var en_letters="qwertyuiop[]asdfghjkl;'zxcvbnm,./QWERTYUIOP{}ASDFGHJKL:"+'"'+"ZXCVBNM<>?`~";
+			var ru_letters='йцукенгшщзхъфывапролджэячсмитьбю.ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ,ёЁ';
+			//Consonants of both languages
+			var en_consonants='qwrtp[]sdfghjkl;'+"'"+'zxcvbnm,./QWRTP{}SDFGHJKL:"ZXCVBNM<>?`~';
+			var ru_consonants='йцкнгшщзхъфвпрлджчсмтьб.ЙЦКНГШЩЗХЪФВПРЛДЖЧСМТЬБ,';
+			//Vowels of both languages
+			var en_vowels='eyuioaEYUIOA';
+			var ru_vowels='уеыаоэяиюУЕЫАОЭЯИЮёЁ';				
+			//Stop symbols for detecting end of the word
+			var stop_symbols=' ?.,!()<#$%^&*';
+			//Words, that don't much the rule of transcription
+			var ru_notwords=new Array('yf','r','yj','f','e;t','b','yt','jyb','Jyb','E;t','nbsp;','тиызж');
+			var ru_words=new Array('на','к','но','а','уже','и','не','они','Они','Уже','nbsp;','nbsp;');
+			var en_notwords=new Array('руддщ','Руддщ','nbp;','тиызж');
+			var en_words=new Array('hello','Hello','nbp;','nbsp;');

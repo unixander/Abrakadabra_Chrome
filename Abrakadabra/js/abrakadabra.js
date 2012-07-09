@@ -1,35 +1,25 @@
 /**
  * @author unixander
  */
-			var fb_class="fbChatMessage fsm direction_ltr";
-			var vk_class="fc_msg wrapped";
-			var gm_class="kl";
-			var imo_class="ms";
+			var working = false;
 			function abrakadabra(){
-				var classname="kl";
-				var url=document.URL;
-				if(url.indexOf("vk.com")!=-1) classname=vk_class; else
-				if(url.indexOf("google.mail.com")!=-1) classname=gm_class; else
-				if(url.indexOf("imo.im")!=-1) classname=imo_class; else
-				if(url.indexOf("facebook")!=-1||url.indexOf("fb.com")!=-1) classname=fb_class; 
-				
-				var array=getElementsByClassName(classname);
-				for(var i=0;i<array.length;i++){
-					if(array[i].innerHTML!=""){
-						res=enru(array[i].innerHTML);
-						array[i].innerHTML=res;
+				try{
+					if(working) return;
+					working = true;
+					var oldhtml=transcript(new String($(this).html()));
+					$(this).html(oldhtml);
+					var eventSet = $(document).data("events");
+					if(!eventSet.DOMNodeInserted) {
+						$(this).live('DOMNodeInserted DOMNodeRemoved DOMSubtreeModified',abrakadabra);
 					}
+					working = false;
+				} catch (e){
+					console.log("abrakadabra");
 				}
 			}
-			function getElementsByClassName(classname)  {
-			    var array = [];
-			    var re = new RegExp('\\b' + classname + '\\b');
-			    var els = document.getElementsByTagName("div");
-			    for(var i=0,j=els.length; i<j; i++)
-			        if(re.test(els[i].className))array.push(els[i]);
-			    return array;
-			}
-			function enru(text){
+			
+			function transcript(text){
+				try{
 				var current_word="";
 				var vowels=0,consonants=0;
 				var ch='';
@@ -89,6 +79,9 @@
 							if(flag) current_word=replace(current_word,direction);
 				result+=current_word;
 				return result;
+				} catch(e){
+				 console.log("transcript");
+				}
 			}
 			function replace(text,direction){
 				//0-english to russian

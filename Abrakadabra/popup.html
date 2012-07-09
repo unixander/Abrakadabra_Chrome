@@ -6,17 +6,17 @@
   <body>
   <div style="position:relative; width: 250px;">
   <div id="english" style="position: absolute; left:0px; width:250px;">
-	<input type="button" onclick="goto(this)" value="Русский"/><br>
+	<input type="button" onclick="switchLanguage(this)" value="Русский"/><br>
   	Found a bug/error? Send it to <a href="mailto:abrakadabra@unixander.org.ua">us</a></br>
   	Also will be glad to see your feedback. <a href="mailto:abrakadabra@unixander.org.ua">Send feedback</a>
   	<hr>
 	<b>Settings:</b><br>
-	<input type="checkbox" class="abracheck" onclick="changeabracheck();"/> Check message log<br>
-	<input type="checkbox" class="abracheckinput" onclick="changeabracheckinput();"/> Check input field
+	<input type="checkbox" class="abracheck" onclick="changeLogCheck();"/> Check message log<br>
+	<input type="checkbox" class="abracheckInput" onclick="changecheckInput();"/> Check input field
 	<hr>
 	<b>Set hotkey:</b>
 	<br>
-	<input type="checkbox" class="checkselected" onclick="changehotkeyaction();"/>Check only selected text on hotkey
+	<input type="checkbox" class="checkselected" onclick="changeHotkeyAction();"/>Check only selected text on hotkey
 	<br>
 	<u>Current hotkey:</u><span class="currenthot"></span>
 	<form name="selecthotkey">
@@ -102,16 +102,16 @@
 	<hr>
   </div>
   <div id="russian" style="position: absolute; left:1000px; width:250px;">
-	<input type="button" onclick="goto(this)" value="English"/><br>
+	<input type="button" onclick="switchLanguage(this)" value="English"/><br>
   	Нашли ошибку? Есть предложения? Напишите <a href="mailto:abrakadabra@unixander.org.ua">нам</a></br>
   	<hr>
 	<b>Настройки:</b><br>
-	<input type="checkbox" class="abracheck" onclick="changeabracheck();"/> Проверять историю сообщений<br>
-	<input type="checkbox" class="abracheckinput" onclick="changeabracheckinput();"/> Проверять поля ввода
+	<input type="checkbox" class="abracheck" onclick="changeLogCheck();"/> Проверять историю сообщений<br>
+	<input type="checkbox" class="abracheckInput" onclick="changecheckInput();"/> Проверять поля ввода
 	<hr>
 	<b>Горячие клавиши:</b>
 	<br>
-	<input type="checkbox" class="checkselected" onclick="changehotkeyaction();"/>Проверять только выделенный текст
+	<input type="checkbox" class="checkselected" onclick="changeHotkeyAction();"/>Проверять только выделенный текст
 	<br>
 	<u>Текущая комбинация:</u><span class="currenthot"></span>
 	<form name="selecthotkey_rus">
@@ -200,7 +200,7 @@
   <script src="js/hotkeys.js"></script>
   <script src="js/jquery-1.7.2.min.js"></script>
   <script>
-		function goto(elem){
+		function switchLanguage(elem){
 			if(elem.value=="Русский"){
 				$("#english").css("left")
 				$("#english").animate("left", "-1000px").css("left", "1000px");
@@ -211,8 +211,8 @@
 				$("#english").animate("left", "0px").css("left","0px");
 			}
 		}
-		checkstorage();
-		abra_load_checkboxes();
+		initStorage();
+		loadCheckboxes();
   </script>
   </body>
 </html>
