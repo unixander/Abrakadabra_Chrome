@@ -16,23 +16,15 @@
 	},
   "permissions": [
   "tabs", 
-  "https://gmail.com/*", 
-  "https://mail.google.com/*",
-  "http://vk.com/*",
-  "http://fb.com/*",
-  "http://facebook.com/*",
-  "https://imo.im/*"
+	"*://gmail.com/*", 
+	"*://mail.google.com/*",
+	"*://vk.com/*",
+	"*://fb.com/*",
+	"*://facebook.com/*",
+	"*://imo.im/*"
    ],
    "content_scripts": [ {
-    "matches": ["https://gmail.com/*", 
-  				"https://mail.google.com/*",
-				  "http://vk.com/*",
-				  "http://*.vk.com/*",
-				  "http://*.fb.com/*",
-				  "http://*.facebook.com/*",
-				  "http://fb.com/*",
-				  "http://facebook.com/*",
-				  "https://imo.im/*"],
+    "matches": ["http://*/*", "https://*/*"],
 	"js": [
         "/js/jquery-1.7.2.min.js",
 		"/js/shortcut.js",
