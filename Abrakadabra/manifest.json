@@ -16,12 +16,12 @@
     },
     "permissions": [
         "tabs", 
-        "*://gmail.com*/*", 
-        "*://mail.google.com*/*",
-        "*://vk.com*/*",
-        "*://fb.com*/*",
-        "*://facebook.com*/*",
-        "*://imo.im*/*"
+        "*://gmail.com/*", 
+        "*://mail.google.com/*",
+        "*://vk.com/*",
+        "*://fb.com/*",
+        "*://facebook.com/*",
+        "*://imo.im/*"
     ],
     "content_scripts": [{
         "matches": [ "http://*/*", "https://*/*" ],
