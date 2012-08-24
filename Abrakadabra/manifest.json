@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "name": "Abracadabra",
     "version": "1.2.0.1",
     "manifest_version": 1,
@@ -6,22 +7,43 @@
     "browser_action": { 
         "default_title": "Abracadabra", 
         "default_icon": "images/icon.ico",
+=======
+    "name": "Abraсadabra",
+    "version": "1.2.0.2",
+    "manifest_version": 1,
+    "description": "Replace words written in other language keyboard layout",
+    "browser_action": { 
+        "default_title": "Abrakadabra", 
+        "default_icon": "images/48icon.png",
+>>>>>>> Version 1.2.0.2
         "default_popup": "popup.html"
     },
     "icons": {
-        "48": "images/icon.ico"
+		"16":"images/16icon.png",
+        "48": "images/48icon.png",
+		"128":"images/128icon.png"
     },
     "background": {
         "page": "background.html"
     },
     "permissions": [
         "tabs", 
+<<<<<<< HEAD
         "*://gmail.com/*", 
         "*://mail.google.com/*",
         "*://vk.com/*",
         "*://fb.com/*",
         "*://facebook.com/*",
         "*://imo.im/*"
+=======
+		"contextMenus",
+        "*://gmail.com*/*", 
+        "*://mail.google.com*/*",
+        "*://vk.com*/*",
+        "*://fb.com*/*",
+        "*://facebook.com*/*",
+        "*://imo.im*/*"
+>>>>>>> Version 1.2.0.2
     ],
     "content_scripts": [{
         "matches": [ "http://*/*", "https://*/*" ],
@@ -30,8 +52,8 @@
             "/js/jquery-1.7.2.min.js",
             "/js/shortcut.js",
             "/js/abrakadabra.js",
-            "/js/background.js",
             "/js/hotkeys.js"
         ]
-    }]
+    }],
+	"update_url":"https://github.com/unixander/Abrakadabra_Chrome/raw/Abracadabra/updateInfo.xml"
 }
